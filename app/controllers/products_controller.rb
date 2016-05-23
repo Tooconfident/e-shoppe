@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-  http_basic_authenticate_with name: "shop", password: "1234", only: [:destroy, :edit]
+  http_basic_authenticate_with name: "shop", password: "1234", only: [:destroy, :edit, :create]
 
   def index
     @products = Product.all
