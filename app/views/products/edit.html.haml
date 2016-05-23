@@ -1,0 +1,19 @@
+= form_for :product, url: product_path(@product), method: :patch do |f|
+  %p
+    = f.label :img
+    %br/
+    = f.text_field :img
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+  %p
+    = f.label :description
+    %br/
+    = f.text_area :description
+  %p
+    = f.label :price
+    %br/
+    = f.text_field :price
+  %p
+    = f.submit
