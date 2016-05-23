@@ -1,0 +1,13 @@
+%h1 All Available Products
+%p click to view
+
+- @products.each do |product|
+  %ul
+    %li
+      = link_to product.name, product_path(product)
+      = product.description
+
+
+
+
+

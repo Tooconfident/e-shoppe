@@ -5,6 +5,7 @@ gem 'pg'
 
 gem 'uglifier'
 gem 'thin'
+gem 'faker'
 
 gem 'jquery-rails'
 gem 'haml-rails'

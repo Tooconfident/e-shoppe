@@ -1,0 +1,19 @@
+      Prefix Verb   URI Pattern                  Controller#Action
+ store_index GET    /store/index(.:format)       store#index
+    products GET    /products(.:format)          products#index
+             POST   /products(.:format)          products#create
+ new_product GET    /products/new(.:format)      products#new
+edit_product GET    /products/:id/edit(.:format) products#edit
+     product GET    /products/:id(.:format)      products#show
+             PATCH  /products/:id(.:format)      products#update
+             PUT    /products/:id(.:format)      products#update
+             DELETE /products/:id(.:format)      products#destroy
+       carts GET    /carts(.:format)             carts#index
+             POST   /carts(.:format)             carts#create
+    new_cart GET    /carts/new(.:format)         carts#new
+   edit_cart GET    /carts/:id/edit(.:format)    carts#edit
+        cart GET    /carts/:id(.:format)         carts#show
+             PATCH  /carts/:id(.:format)         carts#update
+             PUT    /carts/:id(.:format)         carts#update
+             DELETE /carts/:id(.:format)         carts#destroy
+        root GET    /                            store#index
