@@ -9,7 +9,7 @@
 require 'faker'
 
 20.times do
-  Product.create(name: Faker::Commerce.product_name, img: "http://epaper2.mid-day.com/images/no_image_thumb.gif", description: Faker::Company.bs, price: Faker::Commerce.price.to_f)
+  Product.create(name: Faker::Commerce.product_name, img: "http://epaper2.mid-day.com/images/no_image_thumb.gif", description: Faker::Company.bs, price: Faker::Commerce.price.to_f, quantity: rand(10..20))
 end
 
 
