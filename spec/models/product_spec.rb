@@ -24,6 +24,10 @@ RSpec.describe Product, type: :model do
         product_no_price.save
         expect(product_no_price.errors[:price]).to include("can't be blank")
       end
+      it "when the price has more than 2 decimals" do
+        product_no_price.save
+        expect(product_no_price.errors[:price]).to include("is invalid")
+      end
     end
   end
 end
