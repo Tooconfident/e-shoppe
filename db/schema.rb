@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(version: 20160523214134) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "img"
+    t.string   "img",         default: "http://epaper2.mid-day.com/images/no_image_thumb.gif"
     t.string   "description"
     t.string   "name"
     t.decimal  "price"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
   end
 
   add_foreign_key "cart_products", "carts"
