@@ -1,4 +1,7 @@
 class ProductsController < ApplicationController
+
+  http_basic_authenticate_with name: "shop", password: "1234", only: [:destroy, :edit, :create]
+
   def index
     @products = Product.all
   end
@@ -44,7 +47,7 @@ class ProductsController < ApplicationController
 
   private
     def product_params
-      params.require(:product).permit(:title,:text)
+      params.require(:product).permit(:img, :name, :description, :price)
     end
 
 end
