@@ -1,5 +1,8 @@
 %h1 New Product Form
 
+- flash.each do |message_type, message|
+  %div{:class => "alert alert-#{message_type}"}= message
+
 = form_for :product, url: products_path do |f|
   %p
     = f.label :img
@@ -17,5 +20,9 @@
     = f.label :price
     %br/
     = f.text_field :price
+  %p
+    = f.label :quantity
+    %br/
+    = f.number_field :quantity
   %p
     = f.submit

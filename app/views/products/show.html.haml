@@ -1,3 +1,6 @@
+- flash.each do |message_type, message|
+  %div{:class => "alert alert-#{message_type}"}= message
+
 %h1
   = @product.name
 %img{:src=> "#{@product.img}"}/
@@ -12,10 +15,6 @@
 
 -# = link_to 'Buy Me', create new cart
 
-= link_to 'Edit', edit_product_path(@product)
-= link_to 'Destroy', product_path(@product),
-              method: :delete,
-              data: { confirm: 'Are you sure?' }
 = link_to 'Home', products_path
 %br/
 =link_to 'Add to Cart', cart_path(@product)

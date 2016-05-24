@@ -1,0 +1,31 @@
+%h1 Admin Inventory
+= link_to 'Add Product', new_product_path
+= link_to 'Home', products_path
+%p click to view
+
+%table
+  %hr
+    %th Image
+    %th Item Name
+    %th Description
+    %th Quantity
+    %th Price
+    %th Edit
+    %th Remove
+  -@products.each do |product|
+    %tr
+      %td
+        %img.thumbnail{:src => product.img}/
+      %td
+        =link_to product.name, product_path(product)
+      %td
+        =product.description
+      %td
+        =product.quantity
+      %td
+        =product.price
+      %td
+        =link_to 'Edit', edit_product_path(product)
+      %td
+        =link_to 'Destroy', product_path(product),method: :delete, data: { confirm: 'Are you sure?' }
+
