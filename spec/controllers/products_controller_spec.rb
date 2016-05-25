@@ -90,8 +90,76 @@ RSpec.describe ProductsController, type: :controller do
         get :admin
         expect(assigns(:products)).to match_array([product1, product2])
       end
-
     end
 
+    describe '#create' do
+      include AuthHelper
+      before(:each) do
+        http_login
+      end
+
+      let(:params) {{"product"=>{
+        "img"=>"http://egotvonline.com/wp-content/uploads/2011/01/weird-products-2.jpg",
+        "name"=>"prod1",
+        "description"=>"prod1 description",
+        "price"=>"5.78",
+        "quantity"=>"5"}}}
+
+      it 'increments products in the database by 1' do
+
+        expect{post :create, params}.to change{Product.count}.by(1)
+
+      end
+
+      it 'responds with a status of 302' do
+        post :create, params
+        expect(response.status).to eq(302)
+      end
+    end
+
+    describe '#update' do
+      include AuthHelper
+      before(:each) do
+        http_login
+      end
+
+      let(:params) {{"product" => {"name" => "prod1", "description" => ":(", "price" => "5.78", "quantity" => "5"}, "id" => product1.id}}
+      context 'on valid params' do
+
+        it 'responds with a status of 302' do
+          patch :update, params
+          expect(response.status).to eq(302)
+        end
+
+        it 'updates an product in the database' do
+          patch :update, params
+          expect(product1.reload.description).to eq(":(")
+        end
+
+      end
+    end
+
+    context 'on invalid params' do
+      let(:params) {{"product"=>{"name"=>''}, "id"=>0000}}
+      xit 'does not change an product in the database' do
+      end
+    end
+
+    describe '#destroy' do
+      include AuthHelper
+      before(:each) do
+        http_login
+      end
+
+      it 'responds with a status of 302' do
+        delete :destroy, id: product1.id
+        expect(response.status).to eq(302)
+      end
+
+      it 'decrements the products in the database by 1' do
+        product2
+        expect{delete :destroy, id: product2.id}.to change{Product.count}.by(-1)
+      end
+    end
   end
 end
