@@ -15,7 +15,7 @@ image_array = [
 "http://www.businessnewsdaily.com/images/i/000/002/065/original/raw-chicken.jpg?interpolation=lanczos-none&fit=inside%7C700:500",
 "http://i2.wp.com/cdn.bgr.com/2013/08/banana-slicer.png?w=625",
 "https://s-media-cache-ak0.pinimg.com/236x/f9/17/89/f91789e687c07f2a6750759d871dd8eb.jpg",
-"http://epaper2.mid-day.com/images/no_image_thumb.gif"
+"http://www.flexson.com/media/catalog/product/placeholder/default/No_available_image.gif"
 ]
 
 require 'faker'

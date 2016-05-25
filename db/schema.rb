@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(version: 20160524212925) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string   "img",         default: "http://epaper2.mid-day.com/images/no_image_thumb.gif"
+    t.string   "img",         default: "http://www.flexson.com/media/catalog/product/placeholder/default/No_available_image.gif"
     t.string   "description"
     t.string   "name"
     t.decimal  "price"
-    t.datetime "created_at",                                                                   null: false
-    t.datetime "updated_at",                                                                   null: false
+    t.datetime "created_at",                                                                                                      null: false
+    t.datetime "updated_at",                                                                                                      null: false
     t.integer  "quantity"
   end
 
