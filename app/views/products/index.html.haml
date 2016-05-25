@@ -1,13 +1,15 @@
-%h1 All Available Products
-%p click to view
+%div.wrapper
+  %h1 All Available Products
+  = link_to 'Admin Login', admin_products_path
+  %p click to view
 
-- @products.each do |product|
-  %ul
-    %li
+  - @products.each do |product|
+    %div.product-display
+      %img.product-img{:src => product.img}/
       = link_to product.name, product_path(product)
-      = product.description
+      %p.description
+        = product.description
 
-= link_to 'Add Product', new_product_path
 
 
 

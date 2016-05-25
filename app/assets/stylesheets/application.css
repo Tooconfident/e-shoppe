@@ -1,15 +1,68 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+.wrapper {
+  margin: auto;
+  text-align: center;
+}
+
+.thumbnail {
+  height: 100px;
+}
+
+td {
+  padding: 1em;
+}
+
+.product-display {
+  border: 1px solid black;
+  margin: .5%;
+  display: inline-block;
+  width: 30%;
+  min-width: 300px;
+}
+
+.product-display a, .description {
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.product-img {
+  margin: auto;
+  width: 300px;
+  display: block;
+}
+
+.alert-success {
+  color: green;
+  font-size: 2em;
+}
+
+.alert-danger {
+  color: red;
+  font-size: 2em;
+}
+
+table {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+}
+
+td {
+  border: 2px solid black;
+  margin: 0;
+}
+
+nav li{
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  list-style-type: none;
+}
+nav ul{
+    padding: 0;
+    list-style-type: none;
+}
+a {
+  text-decoration: none;
+  font-size: 1.5em;
+}
