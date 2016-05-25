@@ -7,9 +7,15 @@ gem 'uglifier'
 gem 'thin'
 gem 'faker'
 
-gem 'jquery-rails'
-gem 'haml-rails'
 gem 'rails_12factor', group: :production
+gem 'haml-rails'
+gem 'bootstrap-sass'
+
+
+gem 'jquery-rails'
+gem 'autoprefixer-rails'
+gem 'sass-rails'
+
 
 group :development, :test do
   gem 'pry-rails'
