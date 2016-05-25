@@ -23,7 +23,7 @@ RSpec.describe ProductsController, type: :controller do
 
       it "loads all of the products into @products" do
         get :index
-        expect(assigns(:products)).to match_array([product1, product2])
+        expect(assigns(:products)).to be_an(ActiveRecord::Relation)
       end
 
     end
@@ -67,6 +67,30 @@ RSpec.describe ProductsController, type: :controller do
         get :edit, :id => product2.id
         expect(assigns(:product)).to eq(product2)
       end
+    end
+
+    describe "GET #admin" do
+      include AuthHelper
+      before(:each) do
+        http_login
+      end
+
+      it "responds successfully with an HTTP 200 status code" do
+        get :admin
+        expect(response).to be_success
+        expect(response).to have_http_status(200)
+      end
+
+      it "renders the admin template" do
+        get :admin
+        expect(response).to render_template("admin")
+      end
+
+      it "loads all of the products into @products" do
+        get :admin
+        expect(assigns(:products)).to match_array([product1, product2])
+      end
+
     end
 
   end
