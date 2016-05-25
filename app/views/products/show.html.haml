@@ -1,20 +1,21 @@
-- flash.each do |message_type, message|
-  %div{:class => "alert alert-#{message_type}"}= message
+%div.wrapper
+  - flash.each do |message_type, message|
+    %div{:class => "alert alert-#{message_type}"}= message
 
-%h1
-  = @product.name
-%img{:src=> "#{@product.img}"}/
-%p
-  =@product.description
-%p
-  Quantity:
-  =@product.quantity
-%p
-  $
-  =@product.price
+  %h1
+    = @product.name
+  %img{:src=> "#{@product.img}"}/
+  %p
+    =@product.description
+  %p
+    Quantity:
+    =@product.quantity
+  %p
+    $
+    =@product.price
 
--# = link_to 'Buy Me', create new cart
+  -# = link_to 'Buy Me', create new cart
 
-= link_to 'Home', products_path
-%br/
-=link_to 'Add to Cart', cart_path(@product)
+  = link_to 'Home', products_path
+  %br/
+  =link_to 'Add to Cart', cart_path(@product)
