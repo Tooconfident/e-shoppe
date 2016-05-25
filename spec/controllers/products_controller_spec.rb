@@ -5,8 +5,8 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "Routes" do
 
-    let(:product1){Product.create!(name:"prod1", description:"prod1 description", price: 5.78)}
-    let(:product2){Product.create!(name:"prod2", description:"prod2 description", price: 8.78)}
+    let(:product1){Product.create!(name:"prod1", description:"prod1 description", price: 5.78, quantity: 5)}
+    let(:product2){Product.create!(name:"prod2", description:"prod2 description", price: 8.78, quantity: 8)}
 
     describe "GET #index" do
 

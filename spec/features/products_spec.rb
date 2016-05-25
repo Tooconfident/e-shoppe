@@ -34,6 +34,7 @@ RSpec.feature "Products", type: :feature, :js => true do
       fill_in "Name", with: "Cup"
       fill_in "Description", with: "A regular mug"
       fill_in "Price", with: 14.99
+      fill_in "Quantity", with: 2
       click_button "Save Product"
       expect(page).to have_content("Cup")
     end
