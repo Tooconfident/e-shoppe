@@ -5,8 +5,6 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(username: params[:session][:username])
-    p @user
-    p params[:session][:password]
     if @user.authenticate(params[:session][:password])
       session[:id] = @user.id
       redirect_to products_path
@@ -17,7 +15,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session
+    unless !session[:id]
+      reset_session
+    end
     redirect_to root_path
   end
 end

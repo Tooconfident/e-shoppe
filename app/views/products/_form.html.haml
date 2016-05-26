@@ -1,0 +1,28 @@
+= form_for @product do |f|
+  %p
+    = f.label :img
+    %br/
+    = f.text_field :img
+  %p
+    = f.label :name
+    %br/
+    = f.text_field :name
+  %p
+    = f.label :description
+    %br/
+    = f.text_area :description
+  %p
+    = f.label :quantity
+    %br/
+    = f.text_field :quantity
+  %p
+    = f.label :price
+    %br/
+    = f.text_field :price
+  %p
+    - @categories.each do |category|
+      = f.label category.name
+      %input{type: "checkbox", name: "category[]", value: "#{category.id}", checked: @product.categories.include?(category)}
+      %br/
+  %p
+    = f.submit
