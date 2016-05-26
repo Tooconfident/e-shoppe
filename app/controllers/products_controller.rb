@@ -1,9 +1,12 @@
 class ProductsController < ApplicationController
 
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  http_basic_authenticate_with name: "admin", password: "secret", only: [:admin, :destroy, :edit, :create]
+  # http_basic_authenticate_with name: "admin", password: "secret", only: [:admin, :destroy, :edit, :create]
 
   def index
+    if !logged_in_user
+      redirect_to root_path
+    end
     @products = Product.all
   end
 
@@ -44,7 +47,11 @@ class ProductsController < ApplicationController
   end
 
   def admin
-    @products = Product.all
+    if current_user.is_admin
+      @products = Product.all
+    else
+      redirect_to products_path
+    end
   end
 
   private
@@ -55,5 +62,6 @@ class ProductsController < ApplicationController
     def set_product
       @product = Product.find(params[:id])
     end
+
 
 end

@@ -18,10 +18,20 @@ image_array = [
 "http://www.flexson.com/media/catalog/product/placeholder/default/No_available_image.gif"
 ]
 
+User.create(username: 'tom', email: 'tom@tom.com', password: 'tomtom', is_admin: false)
+User.create(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)
+
 require 'faker'
 
 20.times do
   Product.create(name: Faker::Commerce.product_name, img: image_array.sample, description: Faker::Company.bs, price: Faker::Commerce.price.to_f, quantity: rand(10..20))
 end
 
+5.times do
+  Category.create(name: Faker::Commerce.department)
+end
+
+Product.all.each do |product|
+  product.category_products.create(category_id: rand(1..5))
+end
 

@@ -15,7 +15,7 @@ gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'autoprefixer-rails'
 gem 'sass-rails'
-
+gem 'bcrypt'
 
 group :development, :test do
   gem 'pry-rails'

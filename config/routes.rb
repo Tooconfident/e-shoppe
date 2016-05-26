@@ -7,5 +7,18 @@ Rails.application.routes.draw do
   end
   resources :carts
 
+  resources :categories, only: [:index, :show, :edit]
+
+  resources :users
+
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  delete '/logout' => 'sessions#destroy'
+
+  # get '/categories' => 'categories#index'
+  # get '/categories/:id' => 'categories#show', as: 'category'
+
+
+
   root 'store#index'
 end
