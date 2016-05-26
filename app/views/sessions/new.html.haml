@@ -1,0 +1,16 @@
+%h1 Login Form
+
+- flash.each do |message_type, message|
+  %div{:class => "alert alert-#{message_type}"}= message
+
+= form_for :session, url: login_path do |f|
+  %p
+    = f.label :username
+    %br/
+    = f.text_field :username
+  %p
+    = f.label :password
+    %br/
+    = f.password_field :password
+  %p
+    = f.submit("Login")

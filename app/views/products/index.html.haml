@@ -1,6 +1,9 @@
 %div.wrapper
   %h1 All Available Products
-  = link_to 'Admin Login', admin_products_path
+  - if current_user.is_admin
+    = link_to 'Admin View', admin_products_path
+  =link_to 'Logout', logout_path(session[:id]),method: :delete
+  =link_to 'View By Categories', categories_path
   %p click to view
 
   - @products.each do |product|

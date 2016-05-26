@@ -1,0 +1,17 @@
+%div.wrapper
+  - flash.each do |message_type, message|
+    %div{:class => "alert alert-#{message_type}"}= message
+
+  %h1
+    = @category.name
+  = link_to 'Home', categories_path
+  %br
+  - @category.products.each do |product|
+    %div.product-display
+      %img.product-img{:src => product.img}/
+      = link_to product.name, product_path(product)
+      %p.description
+        = product.description
+
+
+
