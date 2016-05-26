@@ -4,7 +4,7 @@ FactoryGirl.define do
     product nil
   end
   factory :category do
-    type ""
+    name ""
   end
   factory :user do
     username "MyString"

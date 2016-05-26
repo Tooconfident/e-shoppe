@@ -10,7 +10,7 @@ gem 'faker'
 gem 'rails_12factor', group: :production
 gem 'haml-rails'
 gem 'bootstrap-sass'
-
+gem 'figaro'
 
 gem 'jquery-rails'
 gem 'autoprefixer-rails'

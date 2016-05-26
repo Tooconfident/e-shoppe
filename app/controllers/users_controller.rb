@@ -6,19 +6,24 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+
     if @user.save
-      flash[:success] = "user Added!"
+      # Sends email to user when user is created.
       session[:id] = @user.id
-      redirect_to @user
+      flash[:success] = "user Added!"
+      p StoreMailer.sample_email(@user)
+      StoreMailer.sample_email(@user).deliver_now!
+      redirect_to products_path
     else
       flash[:danger] = "user has errors!"
-      render 'new'
+      render :new
     end
   end
 
+
   private
     def user_params
-      params.require(:user).permit(:img, :name, :description, :price, :quantity)
+      params.require(:user).permit(:username, :email, :password)
     end
 
 end
