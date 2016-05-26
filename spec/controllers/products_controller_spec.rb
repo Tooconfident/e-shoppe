@@ -4,25 +4,25 @@ require_relative '../auth_helper.rb'
 RSpec.describe ProductsController, type: :controller do
 
   describe "Routes" do
-
+    let!(:admin_user){User.create(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)}
     let(:product1){Product.create!(name:"prod1", description:"prod1 description", price: 5.78, quantity: 5)}
     let(:product2){Product.create!(name:"prod2", description:"prod2 description", price: 8.78, quantity: 8)}
 
     describe "GET #index" do
 
       it "responds successfully with an HTTP 200 status code" do
-        get :index
+        get :index, nil, {'id' => admin_user.id}
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
 
       it "renders the index template" do
-        get :index
+        get :index, nil, {'id' => admin_user.id}
         expect(response).to render_template("index")
       end
 
       it "loads all of the products into @products" do
-        get :index
+        get :index , nil, {'id' => admin_user.id}
         expect(assigns(:products)).to be_an(ActiveRecord::Relation)
       end
 
@@ -30,109 +30,94 @@ RSpec.describe ProductsController, type: :controller do
 
     describe "GET #show" do
       it "responds successfully with an HTTP 200 status code" do
-        get :show, :id => product1.id
+        get(:show, {:id => product1.id}, {'id' => admin_user.id})
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
 
       it "renders the show template" do
-        get :show, :id => product1.id
+        get(:show, :id => product1.id)
         expect(response).to render_template("show")
       end
 
       it "load the product into @product" do
-        get :show, :id => product2.id
+        get( :show, {:id => product2.id}, {'id' => admin_user.id})
         expect(assigns(:product)).to eq(product2)
       end
     end
 
     describe "GET #edit" do
-      include AuthHelper
-      before(:each) do
-        http_login
-      end
 
       it "responds successfully with an HTTP 200 status code" do
-        get :edit, :id => product1.id
+        get( :edit, {:id => product1.id}, {'id' => admin_user.id})
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
 
       it "renders the edit template" do
-        get :edit, :id => product1.id
+        get( :edit, {:id => product1.id}, {'id' => admin_user.id})
         expect(response).to render_template("edit")
       end
 
       it "load the product into @product" do
-        get :edit, :id => product2.id
+        get(:edit, {:id => product2.id}, {'id' => admin_user.id})
         expect(assigns(:product)).to eq(product2)
       end
     end
 
     describe "GET #admin" do
-      include AuthHelper
-      before(:each) do
-        http_login
-      end
 
       it "responds successfully with an HTTP 200 status code" do
-        get :admin
+        get(:admin, nil , {'id' => admin_user.id})
         expect(response).to be_success
         expect(response).to have_http_status(200)
       end
 
       it "renders the admin template" do
-        get :admin
+        get(:admin, nil , {'id' => admin_user.id})
         expect(response).to render_template("admin")
       end
 
       it "loads all of the products into @products" do
-        get :admin
+        get( :admin, nil , {'id' => admin_user.id})
         expect(assigns(:products)).to match_array([product1, product2])
       end
     end
 
     describe '#create' do
-      include AuthHelper
-      before(:each) do
-        http_login
-      end
 
+      let!(:test_category) {create :category}
       let(:params) {{"product"=>{
         "img"=>"http://egotvonline.com/wp-content/uploads/2011/01/weird-products-2.jpg",
         "name"=>"prod1",
         "description"=>"prod1 description",
         "price"=>"5.78",
-        "quantity"=>"5"}}}
+        "quantity"=>"5"}, "category"=>["#{test_category.id}"]}}
+
 
       it 'increments products in the database by 1' do
-
-        expect{post :create, params}.to change{Product.count}.by(1)
-
+        expect{post(:create, params, {'id' => admin_user.id})}.to change{Product.count}.by(1)
       end
 
       it 'responds with a status of 302' do
-        post :create, params
+        post(:create, params, {'id' => admin_user.id})
         expect(response.status).to eq(302)
       end
     end
 
     describe '#update' do
-      include AuthHelper
-      before(:each) do
-        http_login
-      end
+      let!(:test_category) {create :category}
+      let(:params) {{"product" => {"name" => "prod1", "description" => ":(", "price" => "5.78", "quantity" => "5"}, "id" => product1.id, "category" => [test_category.id]}}
 
-      let(:params) {{"product" => {"name" => "prod1", "description" => ":(", "price" => "5.78", "quantity" => "5"}, "id" => product1.id}}
       context 'on valid params' do
 
         it 'responds with a status of 302' do
-          patch :update, params
+          patch(:update, params,{'id' => admin_user.id})
           expect(response.status).to eq(302)
         end
 
         it 'updates an product in the database' do
-          patch :update, params
+          patch(:update, params,{'id' => admin_user.id})
           expect(product1.reload.description).to eq(":(")
         end
 
@@ -146,13 +131,9 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     describe '#destroy' do
-      include AuthHelper
-      before(:each) do
-        http_login
-      end
 
       it 'responds with a status of 302' do
-        delete :destroy, id: product1.id
+        delete(:destroy, {id: product1.id}, {'id' => admin_user.id})
         expect(response.status).to eq(302)
       end
 
