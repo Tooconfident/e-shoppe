@@ -3,9 +3,11 @@ require 'support/macros'
 
 RSpec.feature "Products", type: :feature, :js => true do
   let! (:product) { create :product }
+  let!(:category) {Category.create(name: "Shoes")}
   let!(:admin_user){User.create(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)}
-  before do
+  before(:each) do
     @tim = User.create!(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)
+    page.set_rack_session(id: @tim.id)
   end
   describe "#index" do
     it "display the welcome page" do
@@ -26,7 +28,6 @@ RSpec.feature "Products", type: :feature, :js => true do
   end
 
   describe "products#index" do
-    login_user(@tim)
     it "should have products displayed" do
       visit products_path
       expect(page).to have_content(product.name)
@@ -52,7 +53,8 @@ RSpec.feature "Products", type: :feature, :js => true do
       fill_in "Description", with: "A regular mug"
       fill_in "Price", with: 14.99
       fill_in "Quantity", with: 2
-      click_button "Save Product"
+      page.check "category[]"
+      click_button "Create Product"
       expect(page).to have_content("Cup")
     end
   end

@@ -6,13 +6,18 @@ RSpec.describe Product, type: :model do
   let(:product_no_price) { Product.new(description: "Buy me", name: "I'm free", quantity: 2)}
   let(:product_wrong_decimal) { Product.new(description: "Buy me", name: "I'm free", price: 4.234, quantity: 2)}
   let(:product_no_quantity) {Product.new(description: "Buy me", name: "I'm free", price: 12.99)}
+
   it "can add a product" do
     chair = Product.create!(name: "chair", description: "You can sit on it", img: "http://mediatechnologies.com/images/sized/uploads/products/pr_post_chair-0x640.png", price: 45.99, quantity: 45)
     xylaphone = Product.create!(name: "xylaphone", description: "You can sit on it", img: "http://mediatechnologies.com/images/sized/uploads/products/pr_post_chair-0x640.png", price: 45.99, quantity: 2)
     expect(Product.all.order(:name)).to eq([chair, xylaphone])
   end
 
-  describe "vailidations" do
+  describe "associations" do
+    it { should have_many(:categories)}
+  end
+
+  describe "validations" do
     context "will raise an error" do
       it "when the name field is empty" do
         product_no_name.save

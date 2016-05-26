@@ -124,12 +124,6 @@ RSpec.describe ProductsController, type: :controller do
       end
     end
 
-    context 'on invalid params' do
-      let(:params) {{"product"=>{"name"=>''}, "id"=>0000}}
-      xit 'does not change an product in the database' do
-      end
-    end
-
     describe '#destroy' do
 
       it 'responds with a status of 302' do
@@ -139,7 +133,7 @@ RSpec.describe ProductsController, type: :controller do
 
       it 'decrements the products in the database by 1' do
         product2
-        expect{delete :destroy, id: product2.id}.to change{Product.count}.by(-1)
+        expect{delete(:destroy, {id: product2.id}, {'id' => admin_user.id})}.to change{Product.count}.by(-1)
       end
     end
   end
