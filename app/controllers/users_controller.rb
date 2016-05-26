@@ -11,8 +11,7 @@ class UsersController < ApplicationController
       # Sends email to user when user is created.
       session[:id] = @user.id
       flash[:success] = "user Added!"
-      p StoreMailer.sample_email(@user)
-      StoreMailer.sample_email(@user).deliver_now!
+      @user.send_welcome_email
       redirect_to products_path
     else
       flash[:danger] = "user has errors!"

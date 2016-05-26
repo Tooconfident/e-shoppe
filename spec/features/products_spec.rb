@@ -1,7 +1,12 @@
 require 'rails_helper'
+require 'support/macros'
 
 RSpec.feature "Products", type: :feature, :js => true do
   let! (:product) { create :product }
+  let!(:admin_user){User.create(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)}
+  before do
+    @tim = User.create!(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)
+  end
   describe "#index" do
     it "display the welcome page" do
       visit root_path
@@ -9,7 +14,19 @@ RSpec.feature "Products", type: :feature, :js => true do
     end
   end
 
+  describe "logging in" do
+    it "users can log in" do
+      visit login_path
+      fill_in "Username", :with => admin_user.username
+      fill_in "Password", :with => admin_user.password
+      click_button "Login"
+      expect(page).to have_content("All Available Products")
+    end
+
+  end
+
   describe "products#index" do
+    login_user(@tim)
     it "should have products displayed" do
       visit products_path
       expect(page).to have_content(product.name)

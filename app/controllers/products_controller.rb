@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-
+  before_action :check_admin, only: [:new, :edit, :update, :destroy, :admin]
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   # http_basic_authenticate_with name: "admin", password: "secret", only: [:admin, :destroy, :edit, :create]
 
@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @categories = @product.categories
   end
 
   def new
@@ -23,11 +24,13 @@ class ProductsController < ApplicationController
   end
 
   def create
+    p params
     @product = Product.new(product_params)
-    params.require(:category).each do |id|
-      @product.category_products.create(category_id: id)
-    end
+
     if @product.save
+      params.require(:category).each do |id|
+        @product.category_products.create(category_id: id.to_i)
+      end
       flash[:success] = "Product Added!"
       redirect_to @product
     else
@@ -40,7 +43,7 @@ class ProductsController < ApplicationController
     if @product.update(product_params)
       @product.category_products.all.each {|cat| cat.destroy}
       params.require(:category).each do |id|
-        @product.category_products.create(category_id: id)
+        @product.category_products.create(category_id: id.to_i)
       end
       flash[:success] = "Product updated!"
       redirect_to @product
@@ -56,11 +59,7 @@ class ProductsController < ApplicationController
   end
 
   def admin
-    if current_user.is_admin
-      @products = Product.all
-    else
-      redirect_to products_path
-    end
+    @products = Product.all
   end
 
   private
@@ -72,5 +71,10 @@ class ProductsController < ApplicationController
       @product = Product.find(params[:id])
     end
 
+    def check_admin
+      if !current_user.is_admin
+        redirect_to products_path
+      end
+    end
 
 end

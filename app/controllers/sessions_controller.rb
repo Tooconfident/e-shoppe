@@ -17,7 +17,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session
+    unless !session[:id]
+      reset_session
+    end
     redirect_to root_path
   end
 end
