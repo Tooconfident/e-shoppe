@@ -14,14 +14,19 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @categories = Category.all
     @product = Product.new
   end
 
   def edit
+    @categories = Category.all
   end
 
   def create
     @product = Product.new(product_params)
+    params.require(:category).each do |id|
+      @product.category_products.create(category_id: id)
+    end
     if @product.save
       flash[:success] = "Product Added!"
       redirect_to @product
@@ -33,6 +38,10 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
+      @product.category_products.all.each {|cat| cat.destroy}
+      params.require(:category).each do |id|
+        @product.category_products.create(category_id: id)
+      end
       flash[:success] = "Product updated!"
       redirect_to @product
     else
