@@ -24,7 +24,6 @@ class ProductsController < ApplicationController
   end
 
   def create
-    p params
     @product = Product.new(product_params)
 
     if @product.save

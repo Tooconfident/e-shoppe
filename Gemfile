@@ -16,6 +16,7 @@ gem 'jquery-rails'
 gem 'autoprefixer-rails'
 gem 'sass-rails'
 gem 'bcrypt'
+gem 'rack_session_access'
 
 group :development, :test do
   gem 'pry-rails'
