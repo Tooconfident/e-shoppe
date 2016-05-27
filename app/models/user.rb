@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   validates :username, :email, presence: true
 
   def send_welcome_email
-    StoreMailer.sample_email(self).deliver_now!
+    StoreMailer.sample_email(self).deliver_now
+  end
+
+  def send_purchase_email
+    # StoreMailer.order_email(self).deliver_now
   end
 end

@@ -11,4 +11,7 @@ module ApplicationHelper
     session[:id] || current_user
   end
 
+  def users_cart
+    current_user.carts.find_by(purchased: false)
+  end
 end

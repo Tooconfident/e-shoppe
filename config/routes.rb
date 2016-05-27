@@ -6,12 +6,13 @@ Rails.application.routes.draw do
       get 'admin'
     end
   end
-  resources :carts
 
   resources :categories, only: [:index, :show, :edit]
 
   resources :users do
-    resources :carts, only: [:show, :edit, :destroy, :update]
+    resources :carts, only: [:show, :edit, :update] do
+      resources :orders, except: [:show, :index]
+    end
   end
 
   get '/login' => 'sessions#new'

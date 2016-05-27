@@ -1,5 +1,23 @@
-%h1 Future home of Shopping Cart
+%div.wrapper
+  %h1 Your Cart
+  %div.row
+    %div.col-md-8.col-centered
+      %table.cart_table.table-striped
+        %hr
+          %th Product Name
+          %th Cart Quantity
+          %th Edit
+          %th Remove
+        -users_cart.orders.each do |order|
+          %tr
+            %td
+              =order.product.name
+            %td
+              =order.order_qty
+            %td
+              =link_to 'Edit', edit_user_cart_order_path(current_user, users_cart, order)
+            %td
+              =link_to 'Destroy', user_cart_order_path(current_user, users_cart, order), method: :delete, data: { confirm: 'Are you sure?' }
 
-%p
-  Thanks for purchasing
-  = @product.name
+      %br
+      = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch
