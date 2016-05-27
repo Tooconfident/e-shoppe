@@ -35,3 +35,7 @@ Product.all.each do |product|
   product.category_products.create(category_id: rand(1..5))
 end
 
+User.all.each do |user|
+  user.carts.create(purchased: false)
+end
+

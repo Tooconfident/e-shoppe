@@ -6,8 +6,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
+      @cart = @user.carts.create(purchased: false)
       # Sends email to user when user is created.
       session[:id] = @user.id
       flash[:success] = "user Added!"
