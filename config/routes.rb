@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'store/index'
+
   resources :products do
     collection do
       get 'admin'
@@ -9,16 +10,13 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:index, :show, :edit]
 
-  resources :users
+  resources :users do
+    resources :carts, only: [:show, :edit, :destroy, :update]
+  end
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy'
-
-  # get '/categories' => 'categories#index'
-  # get '/categories/:id' => 'categories#show', as: 'category'
-
-
 
   root 'store#index'
 end
