@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   end
 
   def send_purchase_email
-    # StoreMailer.order_email(self).deliver_now
+    StoreMailer.purchase_email(self).deliver_now
   end
 end

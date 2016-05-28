@@ -1,11 +1,12 @@
 %div.wrapper
   %h1 Your Cart
   %div.row
-    %div.col-md-8.col-centered
-      %table.cart_table.table-striped
+    %div.center.col-md-8.col-md-offset-2
+      %table.cart-table.table-striped.table
         %hr
           %th Product Name
           %th Cart Quantity
+          %th Price
           %th Edit
           %th Remove
         -users_cart.orders.each do |order|
@@ -15,9 +16,12 @@
             %td
               =order.order_qty
             %td
+              $
+              =order.subtotal
+            %td
               =link_to 'Edit', edit_user_cart_order_path(current_user, users_cart, order)
             %td
-              =link_to 'Destroy', user_cart_order_path(current_user, users_cart, order), method: :delete, data: { confirm: 'Are you sure?' }
+              =link_to 'Remove Item', user_cart_order_path(current_user, users_cart, order), method: :delete, data: { confirm: 'Are you sure?' }
 
       %br
       = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch

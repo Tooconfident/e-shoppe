@@ -17,10 +17,12 @@
     -@categories.each do |category|
       =link_to category.name, category_path(category)
   %br/
-
   = form_tag("/users/#{current_user.id}/carts/#{users_cart.id}/orders/new", method: "get") do
     =hidden_field_tag "prod_id", @product.id
-    =submit_tag 'Add to Cart'
+    - if @product.quantity <= 0
+      =submit_tag 'Add to Cart', disabled: true
+    - else
+      =submit_tag 'Add to Cart'
 
   -if current_user.is_admin
     =link_to 'Edit', edit_product_path(@product)

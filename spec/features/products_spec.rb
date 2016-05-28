@@ -22,7 +22,7 @@ RSpec.feature "Products", type: :feature, :js => true do
       fill_in "Username", :with => admin_user.username
       fill_in "Password", :with => admin_user.password
       click_button "Login"
-      expect(page).to have_content("All Available Products")
+      expect(page).to have_content("All Products")
     end
 
   end
@@ -59,11 +59,5 @@ RSpec.feature "Products", type: :feature, :js => true do
     end
   end
 
-  # describe "products#new" do
-  #   it "should display the new product form" do
-  #     visit new_product_path
-  #     expect(page).to have_content("New Product Form")
-  #   end
-  # end
 end
 

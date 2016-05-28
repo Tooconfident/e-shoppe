@@ -10,11 +10,11 @@ class UsersController < ApplicationController
       @cart = @user.carts.create(purchased: false)
       # Sends email to user when user is created.
       session[:id] = @user.id
-      flash[:success] = "user Added!"
+      flash.now[:success] = "user Added!"
       @user.send_welcome_email
       redirect_to products_path
     else
-      flash[:danger] = "user has errors!"
+      flash.now[:danger] = "user has errors!"
       render :new
     end
   end
