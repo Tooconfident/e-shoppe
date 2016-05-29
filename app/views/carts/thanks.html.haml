@@ -1,14 +1,14 @@
-%div.wrapper#cart-table
-  %h1 Thank You for Your Purchase of the Following:
+%div.wrapper
+  %h2 Thank You for Your Purchase of the Following:
 
-  %ol
+  %ol.list-group
     - @cart.orders.each do |order|
-      %li
+      %li.list-group-item
         =order.product.name
 
-  %p
+  %b
     For a total of : $
-    = @cart.total_price
+    = @cart.total_cost
 
   %br
     =link_to 'Continue shopping', products_path

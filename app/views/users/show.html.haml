@@ -3,7 +3,7 @@
   - @purchases.each do |cart|
     %h3
       Your Purchase on
-      = cart.updated_at
+      = cart.updated_at.strftime("%m / %d / %Y")
     %div.row
       %div.center.col-md-8.col-md-offset-2
         %table.order-table.table-striped.table

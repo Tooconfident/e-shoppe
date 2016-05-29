@@ -10,13 +10,13 @@ class CartsController < ApplicationController
   end
 
   def update
-    @cart = users_cart
+    @cart = Cart.find(params[:id])
     @orders = users_cart.orders
     PurchaseCart.deduct_quantities(@orders)
     current_user.send_purchase_email
     users_cart.update(purchased: true)
     current_user.carts.create(purchased: false)
-    redirect_to thanks_user_cart(current_user, @cart)
+    redirect_to thanks_user_cart_path(current_user, @cart)
   end
 
   def thanks

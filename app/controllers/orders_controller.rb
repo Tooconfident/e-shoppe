@@ -30,14 +30,8 @@ class OrdersController < ApplicationController
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
-    # redirect_to user_cart_path(current_user, users_cart)
-
-    #Fucking Carlos remove this, fuvk that guy!!!
     new_price = users_cart.total_cost
-    # respond_to do |format|
-    #   # format.html {render "carts/_row", layout: false}
-    # end
-     render plain: new_price
+    render plain: new_price
   end
 
   def update
@@ -52,10 +46,15 @@ class OrdersController < ApplicationController
     else
       flash.now[:success] = "Product Added to your Cart!"
     end
-    ursers.cart.total_cost
+    total = order.subtotal
+    quantity = order.order_qty
+    grand_total = users_cart.total_cost
+    info_hash = {total: total, quantity: quantity, grand_total: grand_total}
     respond_to do |format|
-      format.html {render "carts/_row", layout: false}
+      format.json { render json: info_hash }
+      format.html { render "carts/show" }
     end
+
   end
 
   def edit

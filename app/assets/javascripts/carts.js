@@ -6,42 +6,51 @@ $(document).ready(function(){
     event.stopPropagation()
     var link = $(this).attr('href')
     var id = $(this).attr('id')
+
     $.ajax({
       method: "delete",
       url: link,
     }).done(function(msg){
       $("tr#" + id).remove()
       $(".total_cost").replaceWith(msg)
+
     })
   })
 
-  $('.edit-link').one('click', function(event){
+  $('.edit-link').on('click', edit);
+
+  function edit(event){
     event.preventDefault()
+    $(".edit-form-holder").html("")
+    $(".edit-form-holder").show()
     var link = $(this).attr('href')
     var id = $(this).attr('id')
+    $(".button_to").hide()
     $.ajax({
       method: "get",
       url: link,
     }).done(function(msg){
       $(".edit-form-holder").append(msg)
-
     })
-  })
+  }
 
   $(".edit-form-holder").on('submit', ".edit_order", function(event){
     event.preventDefault()
     var data = $(this).serialize()
     var link = $(this).attr('action')
     var id = $(this).attr('id')
+    $(".edit-form-holder").html("")
     $.ajax({
-      method: "put",
+      method: "patch",
       url: link,
-      data: data
-    }).done(function(msg){
-      console.log(msg)
+      data: data,
+      dataType: "json"
+    }).done(function(hash){
+      $(".button_to").show()
       $(".edit-form-holder").hide()
-      console.log($(id));
-      $("tr#" + id).html(msg)
+      $(".total_cost").text(hash.grand_total)
+      $("tr#" + id + " > .price").text("$ "+ hash.total)
+      $("tr#" + id + " > .quantity").text( hash.quantity )
     })
   })
 

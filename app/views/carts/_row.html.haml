@@ -1,10 +1,10 @@
 -users_cart.orders.each do |order|
-  %tr{id: "#{order.id}"}
+  %tr{id: "edit_order_#{order.id}"}
     %td
       =order.product.name
-    %td
+    %td.quantity
       =order.order_qty
-    %td{id: "#{order.id}"}
+    %td.price
       $
       =order.subtotal
     %td
