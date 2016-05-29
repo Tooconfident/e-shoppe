@@ -2,8 +2,13 @@ class OrdersController < ApplicationController
   include OrderUpdater
 
   def new
+    p params
     @product = Product.find(params[:prod_id])
+
     @order = Order.new
+    respond_to do |format|
+      format.html {render "new", layout: false}
+    end
   end
 
   def create
@@ -26,7 +31,10 @@ class OrdersController < ApplicationController
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
-    redirect_to user_cart_path(current_user, users_cart)
+    # redirect_to user_cart_path(current_user, users_cart)
+    respond_to do |format|
+      format.html {render "carts/show", layout: false}
+    end
   end
 
   def update
