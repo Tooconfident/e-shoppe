@@ -16,21 +16,11 @@ ActiveRecord::Schema.define(version: 20160525212906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "cart_products", force: :cascade do |t|
-    t.integer  "cart_id"
-    t.integer  "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "cart_products", ["cart_id"], name: "index_cart_products_on_cart_id", using: :btree
-  add_index "cart_products", ["product_id"], name: "index_cart_products_on_product_id", using: :btree
-
   create_table "carts", force: :cascade do |t|
-    t.integer  "session_id"
-    t.boolean  "purchased"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.boolean  "purchased",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -48,6 +38,17 @@ ActiveRecord::Schema.define(version: 20160525212906) do
 
   add_index "category_products", ["category_id"], name: "index_category_products_on_category_id", using: :btree
   add_index "category_products", ["product_id"], name: "index_category_products_on_product_id", using: :btree
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "cart_id"
+    t.integer  "product_id"
+    t.integer  "order_qty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "orders", ["cart_id"], name: "index_orders_on_cart_id", using: :btree
+  add_index "orders", ["product_id"], name: "index_orders_on_product_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "img",         default: "http://www.flexson.com/media/catalog/product/placeholder/default/No_available_image.gif"
@@ -68,8 +69,8 @@ ActiveRecord::Schema.define(version: 20160525212906) do
     t.datetime "updated_at",                      null: false
   end
 
-  add_foreign_key "cart_products", "carts"
-  add_foreign_key "cart_products", "products"
   add_foreign_key "category_products", "categories"
   add_foreign_key "category_products", "products"
+  add_foreign_key "orders", "carts"
+  add_foreign_key "orders", "products"
 end

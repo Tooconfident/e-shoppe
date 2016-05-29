@@ -1,0 +1,17 @@
+%div.wrapper
+  %h2 Thank You for Your Purchase of the Following:
+
+  %ol.list-group
+    - @cart.orders.each do |order|
+      %li.list-group-item
+        =order.product.name
+
+  %b
+    For a total of : $
+    = @cart.total_cost
+
+  %br
+    =link_to 'Continue shopping', products_path
+
+
+

@@ -1,16 +1,15 @@
 %div.wrapper
-  %h1 All Available Products
+  %h1 All Products
 
   %p click to view
-
-  - @products.each do |product|
-    %div.product-display
-      %img.product-img{:src => product.img}/
-      = link_to product.name, product_path(product)
-      %p.description
-        = product.description
-
-
+  %div.row
+    - @products.each do |product|
+      %div.col-md-4.center
+        =link_to image_tag(product.img, :class => "product-img img-responsive"), product_path(product)
+        -# %img.product-img.img-responsive{:src => product.img}/
+        = link_to product.name, product_path(product)
+        %p.description
+          = product.description
 
 
 

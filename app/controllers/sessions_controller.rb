@@ -5,12 +5,15 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(username: params[:session][:username])
-    if @user.authenticate(params[:session][:password])
-      session[:id] = @user.id
-      redirect_to products_path
+    if params[:session][:password] != nil
+      if @user && @user.authenticate(params[:session][:password])
+        session[:id] = @user.id
+        redirect_to products_path
+      else
+        login_error
+      end
     else
-      flash[:danger] = "Incorrect Username or Password"
-      render 'new'
+      login_error
     end
   end
 
@@ -21,3 +24,9 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 end
+
+private
+  def login_error
+    flash.now[:danger] = "Incorrect Username or Password"
+    render 'new'
+  end

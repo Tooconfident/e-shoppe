@@ -19,9 +19,13 @@
         %li
           =link_to 'Logout', logout_path(session[:id]),method: :delete
         %li
+          =link_to 'Order History', user_path(current_user)
+        %li
           =link_to 'View All Items', products_path
         %li
           =link_to 'View By Categories', categories_path
+        %li
+          = link_to 'Your Cart', user_cart_path(current_user, users_cart)
       - if logged_in_user && current_user.is_admin
         %li
           = link_to 'Add Product', new_product_path

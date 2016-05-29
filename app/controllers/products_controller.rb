@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
     if !logged_in_user
       redirect_to root_path
     end
-    @products = Product.all
+    @products = Product.order(:id)
   end
 
   def show
@@ -15,12 +15,12 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @categories = Category.all
+    @categories = Category.order(:id)
     @product = Product.new
   end
 
   def edit
-    @categories = Category.all
+    @categories = Category.order(:id)
   end
 
   def create
@@ -58,7 +58,7 @@ class ProductsController < ApplicationController
   end
 
   def admin
-    @products = Product.all
+    @products = Product.order(:id)
   end
 
   private

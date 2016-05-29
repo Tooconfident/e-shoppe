@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Hi
+      = @user.username
+    %p
+      Thanks for your recent order.
+    %ol
+      -@cart.orders.each do |order|
+        %li
+          #{order.product.name} | x #{order.order_qty} | $ #{order.subtotal}

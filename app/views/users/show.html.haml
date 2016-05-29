@@ -1,0 +1,26 @@
+%div.wrapper#order-table
+  %h1 Your Puchases
+  - @purchases.each do |cart|
+    %h3
+      Your Purchase on
+      = cart.updated_at.strftime("%m / %d / %Y")
+    %div.row
+      %div.center.col-md-8.col-md-offset-2
+        %table.order-table.table-striped.table
+          %hr
+            %th Product Name
+            %th Cart Quantity
+            %th Price
+          - cart.orders.each do |order|
+            %tr{id: "#{order.id}"}
+              %td
+                =order.product.name
+              %td
+                =order.order_qty
+              %td{id: "#{order.id}"}
+                $
+                =order.subtotal
+        %b
+          Total Cost = $
+          %span.total_cost
+            =cart.total_cost

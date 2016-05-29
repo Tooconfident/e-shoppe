@@ -1,46 +1,27 @@
 class CartsController < ApplicationController
-  def index
-    @carts = Cart.all
-  end
-
+  include PurchaseCart
   def show
-    @product = Product.find(params[:id])
-    @cart = Cart.new
+
   end
 
-  def new
-    @cart = Cart.new
-  end
 
   def edit
     @cart = Cart.find(params[:id])
   end
 
-  def create
-    @cart = Cart.new(cart_params)
-
-    if @cart.save
-      redirect_to @cart
-    else
-      render 'new'
-    end
-  end
-
   def update
     @cart = Cart.find(params[:id])
-
-    if @cart.update(cart_params)
-      redirect_to @cart
-    else
-      render 'edit'
-    end
+    @orders = users_cart.orders
+    PurchaseCart.deduct_quantities(@orders)
+    current_user.send_purchase_email
+    users_cart.update(purchased: true)
+    current_user.carts.create(purchased: false)
+    redirect_to thanks_user_cart_path(current_user, @cart)
   end
 
-  def destroy
+  def thanks
     @cart = Cart.find(params[:id])
-    @cart.destroy
-
-    redirect_to carts_path
+    @user = User.find(params[:user_id])
   end
 
 end

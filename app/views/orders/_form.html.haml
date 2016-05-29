@@ -1,0 +1,8 @@
+= form_for [current_user, users_cart, @order] do |f|
+  =hidden_field_tag "prod_id", @product.id
+  %p
+    = f.label :order_qty, 'Order Quantity'
+    %br/
+    = f.number_field :order_qty
+  %p
+    = f.submit

@@ -8,6 +8,7 @@ RSpec.feature "Products", type: :feature, :js => true do
   before(:each) do
     @tim = User.create!(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)
     page.set_rack_session(id: @tim.id)
+    @tim.carts.create(purchased: false)
   end
   describe "#index" do
     it "display the welcome page" do
@@ -22,7 +23,7 @@ RSpec.feature "Products", type: :feature, :js => true do
       fill_in "Username", :with => admin_user.username
       fill_in "Password", :with => admin_user.password
       click_button "Login"
-      expect(page).to have_content("All Available Products")
+      expect(page).to have_content("All Products")
     end
 
   end
@@ -59,11 +60,35 @@ RSpec.feature "Products", type: :feature, :js => true do
     end
   end
 
-  # describe "products#new" do
-  #   it "should display the new product form" do
-  #     visit new_product_path
-  #     expect(page).to have_content("New Product Form")
-  #   end
-  # end
+  describe "add to cart" do
+    it "should add the product to your cart" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      expect(page).to have_content("Order Quantity")
+    end
+
+    it "can accept a quantity for your cart" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      fill_in "Order Quantity", with: 2
+      click_button "Create Order"
+      expect(page).to have_content("Product Added to your Cart!")
+    end
+
+    it "cannot accept an order quantity higher than the product quantity" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      fill_in "Order Quantity", with: 30
+      click_button "Create Order"
+      expect(page).to have_content("Quantity Incorrect")
+    end
+
+    it "disables the add to cart button if the quantity is 0" do
+      product.update(quantity: 0)
+      visit product_path(product)
+      find(:button, "Add to Cart", disabled: true)
+    end
+  end
+
 end
 
