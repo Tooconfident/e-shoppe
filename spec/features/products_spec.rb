@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'support/macros'
+require 'shoulda'
 
 RSpec.feature "Products", type: :feature, :js => true do
   let! (:product) { create :product }
@@ -57,6 +58,36 @@ RSpec.feature "Products", type: :feature, :js => true do
       page.check "category[]"
       click_button "Create Product"
       expect(page).to have_content("Cup")
+    end
+  end
+
+  describe "add to cart" do
+    it "should add the product to your cart" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      expect(page).to have_content("Order Quantity")
+    end
+
+    it "can accept a quantity for your cart" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      fill_in "Order Quantity", with: 2
+      click_button "Create Order"
+      expect(page).to have_content("Product Added to your Cart!")
+    end
+
+    it "cannot accept an order quantity higher than the product quantity" do
+      visit product_path(product)
+      click_button "Add to Cart"
+      fill_in "Order Quantity", with: 30
+      click_button "Create Order"
+      expect(page).to have_content("Quantity Incorrect")
+    end
+
+    it "disables the add to cart button if the quantity is 0" do
+      product.update(quantity: 0)
+      visit product_path(product)
+      find(:button, "Add to Cart", disabled: true)
     end
   end
 
