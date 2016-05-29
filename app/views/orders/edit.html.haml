@@ -1,3 +1,6 @@
 %div.wrapper
   %h2 Edit Order
   =render 'form'
+  %b
+    Available Quantity:
+    = @order.product.quantity

@@ -31,9 +31,13 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.destroy
     # redirect_to user_cart_path(current_user, users_cart)
-    respond_to do |format|
-      format.html {render "carts/show", layout: false}
-    end
+
+    #Fucking Carlos remove this, fuvk that guy!!!
+    new_price = users_cart.total_cost
+    # respond_to do |format|
+    #   # format.html {render "carts/_row", layout: false}
+    # end
+     render plain: new_price
   end
 
   def update
@@ -44,12 +48,14 @@ class OrdersController < ApplicationController
     )
 
     if order.errors.include?(:order_qty)
-      flash[:danger] = order.errors[:order_qty][0]
+      flash.now[:danger] = order.errors[:order_qty][0]
     else
-      flash[:success] = "Product Added to your Cart!"
+      flash.now[:success] = "Product Added to your Cart!"
     end
-
-    redirect_to order.product
+    ursers.cart.total_cost
+    respond_to do |format|
+      format.html {render "carts/_row", layout: false}
+    end
   end
 
   def edit
