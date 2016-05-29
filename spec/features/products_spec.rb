@@ -1,6 +1,5 @@
 require 'rails_helper'
 require 'support/macros'
-require 'shoulda'
 
 RSpec.feature "Products", type: :feature, :js => true do
   let! (:product) { create :product }

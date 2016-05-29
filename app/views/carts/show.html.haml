@@ -16,7 +16,6 @@
           =users_cart.total_cost
       %br
       - if !users_cart.orders.empty?
-        - p users_cart.orders
         = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch, disabled: false
       - else
         = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch, disabled: true

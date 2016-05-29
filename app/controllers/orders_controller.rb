@@ -31,7 +31,14 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.destroy
     new_price = users_cart.total_cost
-    render plain: new_price
+    last_item = users_cart.orders.empty?
+    p last_item
+    info_hash = {new_price: new_price, last_item: last_item}
+    respond_to do |format|
+      format.json { render json: info_hash }
+      format.html { render "carts/show" }
+    end
+
   end
 
   def update

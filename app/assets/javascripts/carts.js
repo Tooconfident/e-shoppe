@@ -10,9 +10,14 @@ $(document).ready(function(){
     $.ajax({
       method: "delete",
       url: link,
+      dataType: "json"
     }).done(function(msg){
+      console.log(msg)
       $("tr#edit_order_" + id).remove()
-      $(".total_cost").replaceWith(msg)
+      $(".total_cost").text(msg.new_price)
+      if (msg.last_item){
+        $(".button_to :nth-child(2)").attr("disabled", true)
+      }
 
     })
   })
