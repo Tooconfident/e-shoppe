@@ -8,6 +8,7 @@ RSpec.feature "Products", type: :feature, :js => true do
   before(:each) do
     @tim = User.create!(username: 'tim', email: 'tim@tim.com', password: 'timtim', is_admin: true)
     page.set_rack_session(id: @tim.id)
+    @tim.carts.create(purchased: false)
   end
   describe "#index" do
     it "display the welcome page" do

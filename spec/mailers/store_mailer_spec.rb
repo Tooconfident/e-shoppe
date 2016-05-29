@@ -24,9 +24,9 @@ RSpec.describe StoreMailer do
   describe 'purchase_email' do
     let!(:user) { create :user }
     let!(:product) { create :product }
-    let!(:mail) { described_class.purchase_email(user).deliver_now }
     let!(:cart) { user.carts.create(purchased: false)}
-    let!(:order){ cart.orders.create(product_id: product.id)}
+    let!(:order){ cart.orders.create(product_id: product.id, order_qty: 4)}
+    let!(:mail) { described_class.purchase_email(user).deliver_now }
 
     it 'renders the subject' do
       expect(mail.subject).to eq('Thanks for Your Order')
