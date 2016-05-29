@@ -15,13 +15,16 @@
               =order.product.name
             %td
               =order.order_qty
-            %td
+            %td{id: "#{order.id}"}
               $
               =order.subtotal
             %td
-              =link_to 'Edit', edit_user_cart_order_path(current_user, users_cart, order)
+              =link_to 'Edit', edit_user_cart_order_path(current_user, users_cart, order), id: "#{order.id}", class: "edit-link", remote: true
             %td
               =link_to 'Remove Item', user_cart_order_path(current_user, users_cart, order), id: "#{order.id}", class: "remove-link", method: :delete, remote: true, data: { confirm: 'Are you sure?' }
-
+      %b
+        Total Cost = $
+        =users_cart.total_cost
       %br
       = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch
+      .edit-form-holder

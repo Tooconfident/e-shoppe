@@ -2,7 +2,6 @@ class OrdersController < ApplicationController
   include OrderUpdater
 
   def new
-    p params
     @product = Product.find(params[:prod_id])
 
     @order = Order.new
@@ -56,6 +55,10 @@ class OrdersController < ApplicationController
   def edit
     @order = Order.find(params[:id])
     @product = Product.find(@order.product.id)
+
+    respond_to do |format|
+      format.html {render "edit", layout: false}
+    end
   end
 
 end

@@ -6,15 +6,26 @@ $(document).ready(function(){
     event.stopPropagation()
     var link = $(this).attr('href')
     var id = $(this).attr('id')
-    console.log(id)
-    console.log(link)
-    $(this).hide()
     $.ajax({
       method: "delete",
       url: link,
     }).done(function(msg){
       console.log(msg)
       $("tr#" + id).remove()
+    })
+  })
+
+  $('.edit-link').on('click', function(event){
+    event.preventDefault()
+    var link = $(this).attr('href')
+    var id = $(this).attr('id')
+    console.log(link)
+    $.ajax({
+      method: "get",
+      url: link,
+    }).done(function(msg){
+      console.log(msg)
+      $(".edit-form-holder").append(msg)
     })
   })
 
