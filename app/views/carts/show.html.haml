@@ -15,8 +15,9 @@
         %span.total_cost
           =users_cart.total_cost
       %br
-      - if users_cart.orders.nil?
-        = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch, disabled: true
+      - if !users_cart.orders.empty?
+        - p users_cart.orders
+        = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch, disabled: false
       - else
-        = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch
+        = button_to 'Purchase', user_cart_path(current_user, users_cart), method: :patch, disabled: true
       .edit-form-holder
