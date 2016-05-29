@@ -11,7 +11,7 @@ $(document).ready(function(){
       method: "delete",
       url: link,
     }).done(function(msg){
-      $("tr#" + id).remove()
+      $("tr#edit_order_" + id).remove()
       $(".total_cost").replaceWith(msg)
 
     })
