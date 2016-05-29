@@ -1,0 +1,17 @@
+%div.wrapper#cart-table
+  %h1 Thank You for Your Purchase of the Following:
+
+  %ol
+    - @cart.orders.each do |order|
+      %li
+        =order.product.name
+
+  %p
+    For a total of : $
+    = @cart.total_price
+
+  %br
+    =link_to 'Continue shopping', products_path
+
+
+

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :carts, only: [:show, :edit, :update] do
+      member do
+        get 'thanks'
+      end
       resources :orders, except: [:show, :index]
     end
   end
