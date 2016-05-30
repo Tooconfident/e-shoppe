@@ -7,7 +7,7 @@ require 'faker'
 require 'capybara/rails'
 
 Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, :browser => :firefox)
 end
 
 Capybara.default_driver = :selenium
