@@ -29,7 +29,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda'
   gem 'capybara'
-  # gem 'selenium-webdriver'
+  gem 'selenium-webdriver'
   # gem 'chromedriver-helper'
 end
 
