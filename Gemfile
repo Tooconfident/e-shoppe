@@ -19,6 +19,7 @@ gem 'bcrypt'
 gem 'rack_session_access'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'pry-rails'
   gem 'byebug'
   gem 'binding_of_caller'
